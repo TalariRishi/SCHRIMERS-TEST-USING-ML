@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction of Schirmer's Test Results</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width:95%;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+        }
+        .header-container img {
+            width: 30%;
+            height: auto;
+        }
+
+        .header .left {
+            display: flex;
+            align-items: center;
+        }
+        .header .left span {
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        .header .left img,
+        .header .left i {
+            height: 20px;
+            margin-right: 5px;
+            font-size: 20px;
+        }
+        .header .right {
+            display: flex;
+            align-items: center;
+        }
+        .header .right a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: black;
+        }
+        .header .right a img,
+        .header .right a i {
+            height: 25px;
+            font-size: 25px;
+        }
+        .header .right .phone {
+            background-color: #7903ff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .logo img {
+            height:80px;
+            margin-right: 20px; /* Increased margin for logo */
+            width: 400px; /* Increased width of logo */
+        }
+        .nav {
+            display: flex;
+            width:100%;
+            align-items:center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .nav .nav-left {
+            display: flex;
+            align-items: center;
+            margin: right 50px; /* Move the nav items to the right */
+
+        }
+        .nav .nav-left:first-child {
+            margin-left: 100px; /* Adjust the value for desired gap size */
+        }
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            display: flex;
+            align-items:center;
+        }
+        .nav a:hover {
+            color: #493cfd;
+        }
+        .nav a::after {
+            content: '|';
+            margin-left: 15px;
+            color: gray;
+        }
+        .nav-left-no-pipe::after {
+            content: ''; /* Remove pipe for "About Us" */
+        }
+        .nav a:last-child::after {
+            content: '';
+        }
+        .nav-right {
+            margin-left: auto;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 220px; /* Adjusted width */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a::after {
+            content:'';
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn i {
+            transform: rotate(180deg);
+        }
+        .dropbtn {
+            display: flex;
+            align-items: center;
+        }
+        .dropbtn i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        .header1{
+            width: 100%;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 400px;
+        }
+
+        .carousel-item {
+            flex: 0 0 100%;
+            display: flex;
+            color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0.5;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            position: relative;
+            height: 100%;
+            transform: scale(0.8);
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .carousel-item.previous,
+        .carousel-item.next {
+            opacity: 0.7;
+        }
+
+        .carousel-text,
+        .carousel-image {
+            padding: 20px;
+            color: white;
+        }
+
+        .carousel-text {
+            align-items:center;
+            flex: 6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-text h1,
+        .carousel-text h2 {
+            margin: 0 0 10px;
+        }
+
+        .carousel-text p {
+            margin: 0;
+            align-items:center;
+        }
+
+        .carousel-image {
+            flex: 4;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: black;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 1;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .carousel-control-prev {
+            left: 10px;
+        }
+
+        .carousel-control-next {
+            right: 10px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .styled-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Unique styles for each carousel item */
+        .carousel-item:nth-child(1) .carousel-text {
+            background-color: rgba(25, 0, 254, 0.242);
+        }
+
+        .carousel-item:nth-child(2) .carousel-text {
+            background-color: rgba(108, 150, 50, 0.6);
+        }
+
+        .carousel-item:nth-child(3) .carousel-text {
+            background-color: #0197FA;
+        }
+        .container{
+            padding: 30px;
+            position:relative;
+            background: linear-gradient(45deg, #161616, #383436, #161616);
+            background-size: 500% 500%;
+            animation: change-gradient 10s ease-in-out infinite;
+        }
+        @keyframes change-gradient {
+            0%{
+                background-position: 0 50%;
+            }
+            50%{
+                background-position: 100% 50%;
+            }
+            100%{
+                background-position: 0 50%;
+            }
+        }
+        .container-heading{
+            margin-bottom: 5px;
+        }
+
+        .heading_font{
+            color: #ffffff;
+            font-family: 'Pacifico', cursive;
+            font-size: 35px;
+            font-weight: normal;
+        }
+        .ml-container {
+            width: 50%;
+            margin: 20px auto;
+            background-color:#ffffff;
+        }
+        .box {
+            background-size: cover;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 10px 0px 10px 0px rgba(0, 0, 0, 0.2);
+           
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 0px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        input[type="text"],input[type="number"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            display: inline-block;
+            width: 30%;
+        }
+        input[type="radio"],input[type="checkbox"] {
+            padding: 8px;
+            margin-left: 30px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        input[type="submit"],input[type="reset"] {
+            font-weight:bold;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition:transform 0.3s;
+        }
+        input[type="reset"].cancel {
+            background-color: #dc3545;
+        }
+        input[type="submit"]:hover,input[type="reset"]:hover {
+            background-color: #008000;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="left">
+            <span><i class="fas fa-map-marker-alt"></i> 12+ Branches across TG & AP</span>
+            <span><i class="fas fa-phone-alt"></i>+91 1234567895</span>
+            <span><i class="fas fa-envelope"></i> <a href="mailto:contact@geethanjalieye.com">contact@geethanjalieye.com</a></span>
+            <span><i class="fas fa-star"></i> 4.8/5 (Based on 1500+ Google reviews)</span>
+        </div>
+        <div class="right">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a class="phone" href="tel:+911234567895">Call us</a>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png')}}" alt="Logo">
+        </div>
+        <div class="nav-left">
+            <a href="{{ url_for('index') }}" class="nav-left-first" target="_blank">About Us</a>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Specialities <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="https://en.wikipedia.org/wiki/Sj%C3%B6gren_syndrome" target="_blank">Sjogren's syndrome</a>
+                    <a href="https://en.wikipedia.org/wiki/LASIK" target="_blank">Lasik</a>
+                    <a href="https://www.webmd.com/eye-health/what-to-know-icl-surgery" target="_blank">ICL & IPCL</a>
+                    <a href="https://en.wikipedia.org/wiki/Strabismus" target="_blank">Strabismus</a>
+                    <a href="https://en.wikipedia.org/wiki/Retina" target="_blank">Retina</a>
+                    <a href="https://en.wikipedia.org/wiki/Glaucoma" target="_blank">Glaucoma</a>
+                    <a href="https://en.wikipedia.org/wiki/Cornea" target="_blank">Cornea</a>
+                    <a href="https://en.wikipedia.org/wiki/Contact_lens" target="_blank">Contact Lenses</a>
+                    <a href="https://en.wikipedia.org/wiki/Diabetic_retinopathy" target="_blank">Diabetic Retinopathy</a>
+                    <a href="https://en.wikipedia.org/wiki/Oculoplastics" target="_blank">Oculoplasty</a>
+                    <a href="https://cataracteyesurgery.co/treatment/robotic-cataract-surgery/" target="_blank">Robotic Cataract</a>
+                </div>
+            </div>
+            <a href="https://www.dragarwal.com/blogs/" target="_blank">Blogs</a>
+            <a href="https://www.practo.com/hyderabad/ophthalmologist" target="_blank">Our Doctors</a>
+            <a class="phone" href="tel:+911234567890">Contact Us</a>
+            <a href="{{ url_for('signup') }}" target="_blank">Sign up for a Consultation</a>
+            <a href="{{ url_for('userlogin') }}" target="_blank">Login</a>
+            <a href="#">Profile</a>
+        </div>
+    </div>
+    <div class="header1">
+        <h1>Online Schirmer's Test Predictor</h1>
+    </div>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="carousel-text">
+                    <h1 style="color:rgb(169, 0, 211)">Is it advisable to dedicate extended periods to using digital devices?</h1><br>
+                    <p><center><font size="5">It's advisable to limit daily screen time to two hours to mitigate potential health risks 
+                        associated with excessive digital device use, promoting a balanced lifestyle with varied activities.</font></center></p><br>
+                    <h2 style="color:rgba(153, 0, 255, 0.897)">Here is our Online Schirmer's test to detect Dry eyes.</h2>
+                </div>
+                <div class="carousel-image" style="background-image: url('{{ image_urls['image1'] }}');"></div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-text">
+                    <h1 style="color:darkgreen">Do you feel any dryness in eyes??</h1><br>
+                    <p><center><font size="5">Dryness of eyes, also known as dry eye syndrome,
+                                            occurs when tears are unable to provide adequate lubrication. 
+                                            Symptoms may include irritation, redness, and a gritty sensation.Dry eyes are detected by Schirmer's Test.</font></center></p><br>
+                    <h2 style="color:rgb(255, 255, 255)">Want to know more about Schirmer Test??</h2><br>
+                    <I><a class="styled-link" href="https://en.wikipedia.org/wiki/Schirmer%27s_test" target="_blank" style="color:rgb(59, 35, 214)">Click here</a></I>
+                </div>
+                <div class="carousel-image" style="background-image: url('{{ image_urls['image2'] }}');"></div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-text">
+                    <h1 style="color:#f8f8f8">How can one determine if they have dry eye syndrome?</h1>
+                    <p><center><font size="5">Dry eye syndrome typically affects individuals with reduced tear production, indicated by
+                     Schirmer's test results of less than 10mm in both eyes, with and without anesthesia.</font></center></p><br>
+                    <h2 style="color:#f8f8f8"><center>Fill the below form to know your Schirmer test results.</center></h2>
+                </div>
+                <div class="carousel-image" style="background-image: url('{{ image_urls['image3'] }}');"></div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true">&lt;</span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true">&gt;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div></center>
+
+<div class="ml-container">
+    <div class="box">
+        <center><h1><br>Fill the below form to know your results</h1></center><br>
+        <form action="{{ url_for('predict')}}" method="POST" onsubmit="return validateInput()">
+            
+    <label for="name"><b>1. Name:</b></label>
+        <input type="text" id="name" name="name" required><br>
+    
+        <td><label for="age"><b>2. Age:</b></label>&nbsp;&nbsp;&nbsp;
+        <td><input type="number" id="age" name="age" required><br>
+    
+        <label for="sex"><b>3. Gender:</b></label>
+        <label><input type="radio" id="male" name="sex" value="1" required>Male</label>
+    <label><input type="radio" id="female" name="sex" value="2" required>Female</label><br>
+
+        <label for="wearables"><b>4. Do you wear Prescription glasses or Contact lenses?</b></label><br>
+        <label><input type="radio" name="wearables" value="1" required> Glasses only</label><br>
+    <label><input type="radio" name="wearables" value="2" required> Contact lenses only</label><br>
+    <label><input type="radio" name="wearables" value="3" required> None</label><br>
+    <label><input type="radio" name="wearables" value="4" required> Both, at one or other time</label><br>
+    <label><input type="radio" name="wearables" value="5" required> Not applicable</label><br>
+
+
+        <label for="duration"><b>5. If yes, duration of usage:</b></label><br>
+        <label><input type="radio" name="duration" value="1" required> 0 or 0-5 years</label><br>
+    <label><input type="radio" name="duration" value="2" required> 5-10 years</label><br>
+    <label><input type="radio" name="duration" value="3" required> &gt;10 years</label><br>
+
+
+        <label for="onlineplatforms"><b>6. Are you using any online platforms to attend to any webinars or classes?</b></label><br>
+        <label><input type="radio" name="onlineplatforms" value="1" required> Yes</label><br>
+    <label><input type="radio" name="onlineplatforms" value="2" required> No</label><br>
+
+
+        <label for="nature"><b>7. Nature of computer usage in a day:</b></label><br>
+        <label><input type="radio" name="nature" value="1" required> Continuous</label><br>
+    <label><input type="radio" name="nature" value="2" required> Interrupted</label><br>
+
+
+        <label for="screenillumination"><b>8. What will be your normal screen illumination while working on computer?</b></label><br>
+        <label><input type="radio" name="screenillumination" value="1" required> &lt;25%</label><br>
+    <label><input type="radio" name="screenillumination" value="2" required> 25-30%</label><br>
+    <label><input type="radio" name="screenillumination" value="3" required> &gt;50%</label><br>
+
+
+        <label for="workingyears"><b>9. How many years you have been working with the computer on daily basis?</b></label><br>
+        <label><input type="radio" name="workingyears" value="1" required> &lt;5 years</label><br>
+    <label><input type="radio" name="workingyears" value="2" required> 5-10 years</label><br>
+    <label><input type="radio" name="workingyears" value="3" required> &gt;10 years</label><br>
+
+
+        <label for="hoursspentdailycurricular"><b>10. Hours Spent Daily on Curricular Activities:</b></label><br>
+        <label><input type="radio" name="hoursspentdailycurricular" value="1" required> 2-4 hours</label><br>
+    <label><input type="radio" name="hoursspentdailycurricular" value="2" required> 4-6 hours</label><br>
+    <label><input type="radio" name="hoursspentdailycurricular" value="3" required> 6-8 hours</label><br>
+    <label><input type="radio" name="hoursspentdailycurricular" value="4" required> 8-10 hours</label><br>
+
+        <label for="hoursspentdailynoncurricular"><b>11. Hours Spent Daily on Non-Curricular Activities:</b></label><br>
+        <label><input type="radio" name="hoursspentdailynoncurricular" value="1" required> Less than 2 hours</label><br>
+    <label><input type="radio" name="hoursspentdailynoncurricular" value="2" required> 2-4 hours</label><br>
+    <label><input type="radio" name="hoursspentdailynoncurricular" value="3" required> 4-6 hours</label><br>
+    <label><input type="radio" name="hoursspentdailynoncurricular" value="4" required> 6-8 hours</label><br>
+
+        <label for="gadgetsused"><b>12. What gadget do you use most of the times?</b></label><br>
+        <label><input type="radio" name="gadgetsused" value="1" required> Mobile</label><br>
+    <label><input type="radio" name="gadgetsused" value="2" required> Laptop</label><br>
+    <label><input type="radio" name="gadgetsused" value="3" required> Tablet</label><br>
+
+        <label for="levelofgadjetwithrespecttoeyes"><b>13. Level of Gadget with Respect to Eyes:</b></label><br>
+        <label><input type="radio" name="levelofgadjetwithrespecttoeyes" value="1" required> Above the level of eyes (eyes have to look up)</label><br>
+    <label><input type="radio" name="levelofgadjetwithrespecttoeyes" value="2" required> At the level of eyes</label><br>
+
+        <label for="distancebetweeneyesandgadget"><b>14. Distance kept between your Eyes and Gadget:</b></label><br>
+    <label><input type="radio" name="distancebetweeneyesandgadget" value="1" required> Less than 25 cm</label><br>
+    <label><input type="radio" name="distancebetweeneyesandgadget" value="2" required> 25-40 cm</label><br>
+    <label><input type="radio" name="distancebetweeneyesandgadget" value="3" required> More than 40 cm</label><br>
+
+        <label for="avgnighttimeusageperday"><b>15. Average night time usage per day:</b></label><br>
+        <label><input type="radio" name="avgnighttimeusageperday" value="1" required> Less than 1 hour</label><br>
+    <label><input type="radio" name="avgnighttimeusageperday" value="2" required> 1-2 hours</label><br>
+    <label><input type="radio" name="avgnighttimeusageperday" value="3" required> 2-4 hours</label><br>
+    <label><input type="radio" name="avgnighttimeusageperday" value="4" required> More than 4 hours</label><br>
+
+        <label for="blinkingduringscreenusage"><b>16. Do you blink your eyes during screen usage?</b></label><br>
+        <label><input type="radio" name="blinkingduringscreenusage" value="1" required> Yes</label><br>
+    <label><input type="radio" name="blinkingduringscreenusage" value="2" required> No</label><br>
+
+        <label for="difficultyinfocusing"><b>17. Do you feel difficulty in focusing after using screens?</b></label><br>
+        <label><input type="radio" name="difficultyinfocusing" value="1" required> Yes</label><br>
+    <label><input type="radio" name="difficultyinfocusing" value="2" required> No</label><br>
+    <label><input type="radio" name="difficultyinfocusing" value="3" required> Maybe</label><br>
+
+    <label for="frequencyofcomplaints"><b>18. Frequency of Complaints:</b></label><br>
+    <label><input type="radio" name="frequencyofcomplaints" value="0" required> Never</label><br>
+    <label><input type="radio" name="frequencyofcomplaints" value="1" required> &lt;5 times a week</label><br>
+    <label><input type="radio" name="frequencyofcomplaints" value="2" required> &gt;5 times a week</label><br>
+
+    <label for="severityofcomplaints"><b>19. Severity of Complaints:</b></label><br>
+    <label><input type="radio" name="severityofcomplaints" value="0" required> Never</label><br>
+    <label><input type="radio" name="severityofcomplaints" value="1" required> Disturbs work</label><br>
+    <label><input type="radio" name="severityofcomplaints" value="2" required> Severe enough to stop work and take rest</label><br>
+
+    <label for="rvis"><b>20. RVIS (Refractive Visual Impairment Score):</b></label><br>
+    <label><input type="radio" name="rvis" value="1" required> Yes</label><br>
+    <label><input type="radio" name="rvis" value="0" required> No</label><br>
+    <label for="ocularsymptoms"><b>21. Ocular Symptoms Observed Lately:</b></label><br>
+        <ol>
+        <li>Heaviness / tired eyes</li><br>
+        <li>Redness in eyes</li><br>
+        <li>Watering from eyes</li><br>
+        <li>Feeling of grittiness in eyes</li><br>
+        <li>Itchy eyes (eye rubbing)</li><br>
+        <li>Transient blurring of vision</li><br>
+        <li>Sensitivity to bright light</li><br>
+        <li>Contact lens discomfort</li><br>
+        <li>Headache</li><br>
+        <li>Other</li><br>
+        </ol>
+    <label><b>Please enter your ocular symptoms from above</b><br><br><input type="text" name="ocularsymptoms"></label><br>
+    <label for="symptomsatleasthalf"><b>22. Symptoms Observed at Least Half of the Times:</b></label><br>
+        <ol>
+        <li>Difficulty concentrating</li><br>
+        <li>Anxiety</li><br>
+        <li>Sleep disturbances</li><br>
+        <li>Dizziness</li><br>
+        <li>Pain in neck</li><br>
+        </ol>
+    <label><b>Please enter your symptoms observed from above</b><br><br><input type="text" name="symptomsatleasthalf"></label><br>
+    <label for="frequencyofdryeyes"><b>23. How often do your eyes feel dry?</b></label><br>
+    <label><input type="radio" name="frequencyofdryeyes" value="1" required> Often</label><br>
+    <label><input type="radio" name="frequencyofdryeyes" value="2" required> Sometimes</label><br>
+    <label><input type="radio" name="frequencyofdryeyes" value="3" required> Never</label><br><br>
+
+            <center><input type="submit" value="Predict">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="reset" class="cancel" value="Cancel"></center>
+        </form>
+    </div>
+</div>
+    <script>
+        let currentIndex = 0;
+
+        const items = document.querySelectorAll('.carousel-item');
+        const totalItems = items.length;
+
+        document.querySelector('.carousel-control-next').addEventListener('click', () => {
+            moveToNextSlide();
+        });
+
+        document.querySelector('.carousel-control-prev').addEventListener('click', () => {
+            moveToPrevSlide();
+        });
+
+        function moveToNextSlide() {
+            items[currentIndex].classList.remove('active');
+            items[(currentIndex - 1 + totalItems) % totalItems].classList.remove('previous');
+            items[(currentIndex + 1) % totalItems].classList.remove('next');
+            currentIndex = (currentIndex + 1) % totalItems;
+            items[currentIndex].classList.add('active');
+            items[(currentIndex - 1 + totalItems) % totalItems].classList.add('previous');
+            items[(currentIndex + 1) % totalItems].classList.add('next');
+            updateCarousel();
+        }
+
+        function moveToPrevSlide() {
+            items[currentIndex].classList.remove('active');
+            items[(currentIndex - 1 + totalItems) % totalItems].classList.remove('previous');
+            items[(currentIndex + 1) % totalItems].classList.remove('next');
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            items[currentIndex].classList.add('active');
+            items[(currentIndex - 1 + totalItems) % totalItems].classList.add('previous');
+            items[(currentIndex + 1) % totalItems].classList.add('next');
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const newTransform = `translateX(-${currentIndex * 100}%)`;
+            document.querySelector('.carousel-inner').style.transform = newTransform;
+        }
+        function validateInput() {
+            let input = document.querySelector('input[name="symptomsatleasthalf"]').value;
+            let regex = /^[1-5]+$/; 
+            if (!regex.test(input)) {
+                alert("Input is invalid! Please use only the digits 1, 2, 3, 4, 5.");
+                return false; 
+            }
+            return true; 
+        }
+        items[(currentIndex - 1 + totalItems) % totalItems].classList.add('previous');
+        items[(currentIndex + 1) % totalItems].classList.add('next');
+        setInterval(moveToNextSlide, 10000); 
+    </script>
+</body>
+</html>

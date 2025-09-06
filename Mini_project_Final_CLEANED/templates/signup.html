@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup for a Consultation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: teal;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            border-radius: 25px;
+            margin: auto;
+            width: 35%;
+            padding: 25px;
+            background-color: white;
+            box-shadow: 20px 20px 20px 0px rgba(0, 0, 0, 0.7);
+        }
+        label {
+            display: block;
+            width: 130px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #fffcd7da;
+            color: #0000009b;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+            <header>
+                <br><br>
+                <b><a href="index.html" class="btn">Go to Home Page</a></b><br><br>
+            </header>
+            <form name="consultationForm" action="login.html" method="post" onsubmit="return validate()">
+                <div class="container">
+                    <h2 style="color:rgb(132, 0, 255);text-align:center;">Interested in us</h2>
+                    <h1 style="color:navy;text-align:center;">Please Signup for a Consultation</h1>
+                    <hr/>
+                <font size="3">
+                    <table align="center" width="26%" cellspacing="10">
+                        <tr>
+                            <td><label>Full Name :</label></td>
+                            <td><input type="text" id="n1" name="fullname" size="20"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Email :</label></td> 
+                            <td><input type="email" id="e1" name="email"> <br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Mobile Number :</label></td>
+                            <td><input type="text" id="m1"  name="mobile" maxlength="10"> <br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Gender :</label></td>
+                            <td>
+                                <input type="radio" name="gender" value="Male" id="r1">Male<br><br>
+                                <input type="radio" name="gender" value="Female" id="r2">Female<br><br>
+                                <input type="radio" name="gender" value="Others" id="r3">Others<br><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Consultation Type:</label></td>
+                            <td>
+                                <select id="consultType" name="consultType">
+                                    <option value="General">General Consultation</option>
+                                    <option value="Specialist">Specialist Consultation</option>
+                                    <option value="Follow-up">Follow-up Consultation</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Preferred Date :</label></td>
+                            <td><input type="date" id="consultDate" name="consultDate"> <br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Preferred Time :</label></td>
+                            <td><input type="time" id="consultTime" name="consultTime"> <br></td>
+                        </tr>
+                    </table>
+                    <hr/>
+                    <br>
+                    <input type="submit" value="Signup" name="submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="reset" value="Cancel">
+                    <br><br><br>
+                </font>
+                </div>
+            </form>
+    </center>
+
+    <script>
+        function validate() {
+            var fullname = document.getElementById("n1").value;
+            var email = document.getElementById("e1").value;
+            var mobile = document.getElementById("m1").value;
+            var male = document.getElementById("r1").checked;
+            var female = document.getElementById("r2").checked;
+            var others = document.getElementById("r3").checked;
+            var consultType = document.getElementById("consultType").value;
+            var consultDate = document.getElementById("consultDate").value;
+            var consultTime = document.getElementById("consultTime").value;
+
+            if (fullname === "" || !(isNaN(fullname))) {
+                alert("Full Name should not be empty and should contain only alphabets");
+                return false;
+            }
+            if (email === "" || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                alert("Please enter a valid email address");
+                return false;
+            }
+            if (mobile === "" || isNaN(mobile) || mobile.length !== 10) {
+                alert("Mobile number should be 10 digits and contain only numbers");
+                return false;
+            }
+            if (!(male || female || others)) {
+                alert("Select one option for Gender");
+                return false;
+            }
+            if (consultType === "") {
+                alert("Select a Consultation Type");
+                return false;
+            }
+            if (consultDate === "") {
+                alert("Select a Preferred Date for Consultation");
+                return false;
+            }
+            if (consultTime === "") {
+                alert("Select a Preferred Time for Consultation");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

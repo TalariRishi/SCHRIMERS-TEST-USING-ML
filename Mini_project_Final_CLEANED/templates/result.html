@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schirmer's Test Results</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width: 95%;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+        }
+        .header-container img {
+            width: 30%;
+            height: auto;
+        }
+        .header .left {
+            display: flex;
+            align-items: center;
+        }
+        .header .left span {
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        .header .left img,
+        .header .left i {
+            height: 20px;
+            margin-right: 5px;
+            font-size: 20px;
+        }
+        .header .right {
+            display: flex;
+            align-items: center;
+        }
+        .header .right a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: black;
+        }
+        .header .right a img,
+        .header .right a i {
+            height: 25px;
+            font-size: 25px;
+        }
+        .header .right .phone {
+            background-color: #7903ff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .logo img {
+            height: 80px;
+            margin-right: 20px;
+            width: 400px;
+        }
+        .nav {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .nav .nav-left {
+            display: flex;
+            align-items: center;
+            margin-right: 50px;
+        }
+        .nav .nav-left:first-child {
+            margin-left: 100px;
+        }
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .nav a:hover {
+            color: #493cfd;
+        }
+        .nav a::after {
+            content: '|';
+            margin-left: 15px;
+            color: gray;
+        }
+        .nav-left-no-pipe::after {
+            content: '';
+        }
+        .nav a:last-child::after {
+            content: '';
+        }
+        .nav-right {
+            margin-left: auto;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a::after {
+            content: '';
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn i {
+            transform: rotate(180deg);
+        }
+        .dropbtn {
+            display: flex;
+            align-items: center;
+        }
+        .dropbtn i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        .header1 {
+            width: 100%;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        .styled-link {
+            color: white;
+            text-decoration: none;
+        }
+        .container {
+            padding: 30px;
+            position: relative;
+            background: linear-gradient(45deg, #161616, #383436, #161616);
+            background-size: 500% 500%;
+            animation: change-gradient 10s ease-in-out infinite;
+        }
+        @keyframes change-gradient {
+            0% {
+                background-position: 0 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0 50%;
+            }
+        }
+        .container-heading {
+            margin-bottom: 5px;
+        }
+        .heading_font {
+            color: #ffffff;
+            font-family: 'Pacifico', cursive;
+            font-size: 35px;
+            font-weight: normal;
+        }
+        .ml-container {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #ffffff;
+        }
+        .box {
+            background-size: cover;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 10px 0px 10px 0px rgba(0, 0, 0, 0.2);
+        }
+        .results-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width:60%;
+            height:60vh;
+        }
+        .results {
+            text-align: center;
+            flex: 1;
+        }
+        .results h1 {
+            color: darkviolet;
+        }
+        .image-container {
+            flex: 1;
+            background-image:url('{{ result_url['image4'] }}'); 
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position:right;
+            height:400px;
+        }
+        .output-message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .output-message.danger {
+            color: red;
+        }
+        .output-message.hurray {
+            color: green;
+        }
+        .output-message.mild {
+            color: rgb(255, 119, 0);
+        }
+        .info-section {
+            display: flex;
+            justify-content:space-evenly;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .info-box {
+            width: 22%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.699);
+            transition: transform 0.3s;
+        }
+
+        .info-box:hover {
+            transform: translateY(-10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="left">
+            <span><i class="fas fa-map-marker-alt"></i> 12+ Branches across TG & AP</span>
+            <span><i class="fas fa-phone-alt"></i>+91 1234567895</span>
+            <span><i class="fas fa-envelope"></i> <a href="mailto:contact@geethanjalieye.com">contact@geethanjalieye.com</a></span>
+            <span><i class="fas fa-star"></i> 4.8/5 (Based on 1500+ Google reviews)</span>
+        </div>
+        <div class="right">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a class="phone" href="tel:+911234567895">Call us</a>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png')}}" alt="Logo">
+        </div>
+        <div class="nav-left">
+            <a href="{{ url_for('index') }}" class="nav-left-first" target="_blank">About Us</a>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Specialities <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="https://en.wikipedia.org/wiki/Sj%C3%B6gren_syndrome" target="_blank">Sjogren's syndrome</a>
+                    <a href="https://en.wikipedia.org/wiki/LASIK" target="_blank">Lasik</a>
+                    <a href="https://www.webmd.com/eye-health/what-to-know-icl-surgery" target="_blank">ICL & IPCL</a>
+                    <a href="https://en.wikipedia.org/wiki/Strabismus" target="_blank">Strabismus</a>
+                    <a href="https://en.wikipedia.org/wiki/Retina" target="_blank">Retina</a>
+                    <a href="https://en.wikipedia.org/wiki/Glaucoma" target="_blank">Glaucoma</a>
+                    <a href="https://en.wikipedia.org/wiki/Cornea" target="_blank">Cornea</a>
+                    <a href="https://en.wikipedia.org/wiki/Contact_lens" target="_blank">Contact Lenses</a>
+                    <a href="https://en.wikipedia.org/wiki/Diabetic_retinopathy" target="_blank">Diabetic Retinopathy</a>
+                    <a href="https://en.wikipedia.org/wiki/Oculoplastics" target="_blank">Oculoplasty</a>
+                    <a href="https://cataracteyesurgery.co/treatment/robotic-cataract-surgery/" target="_blank">Robotic Cataract</a>
+                </div>
+            </div>
+            <a href="https://www.dragarwal.com/blogs/" target="_blank">Blogs</a>
+            <a href="https://www.practo.com/hyderabad/ophthalmologist" target="_blank">Our Doctors</a>
+            <a class="phone" href="tel:+911234567890">Contact Us</a>
+            <a href="{{ url_for('signup') }}">Sign up for a Consultation</a>
+            <a href="{{ url_for('userlogin') }}">Login</a>
+            <a href="#">Profile</a>
+        </div>
+    </div>
+    <div class="header1">
+        <h1>Online Schirmer's Test Predictor</h1>
+    </div>
+    <div class="results-container">
+        <div class="results">
+        <h1 style="color:blueviolet">Predictions:</h1><br>
+            <p>Schirmer's Test 1 Left Eye Prediction :<span id="left-eye-1"> {{ prediction[0][0] }}</span></p>
+            <p>Schirmer's Test 1 Right Eye Prediction:<span id="right-eye-1">{{ prediction[0][1] }}</span></p>
+            <p>Schirmer's Test 2 Left Eye Prediction :<span id="left-eye-2"> {{ prediction[0][2] }}</span></p>
+            <p>Schirmer's Test 2 Right Eye Prediction:<span id="right-eye-2">{{ prediction[0][3] }}</span></p>
+            <div id="output-message" class="output-message"></div>
+        </div>
+            <div class="image-container"></div>
+        </div>
+        <div class="info-section">
+            <div class="info-box">
+                <h3 style="color:#493cfd">Our Services</h3>
+                <p>We offer a wide range of eye care services, including routine exams, cataract surgery, and laser treatments.</p>
+            </div>
+            <div class="info-box">
+                <h3 style="color:#493cfd">Our Doctors</h3>
+                <p>Meet our team of experienced and dedicated eye care professionals.</p>
+            </div>
+            <div class="info-box">
+                <h3 style="color:#493cfd">Contact Us</h3>
+                <p>Get in touch with us to schedule an appointment or for any inquiries.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkPredictions() {
+            const leftEye1 = parseFloat(document.getElementById('left-eye-1').textContent);
+            const rightEye1 = parseFloat(document.getElementById('right-eye-1').textContent);
+            const leftEye2 = parseFloat(document.getElementById('left-eye-2').textContent);
+            const rightEye2 = parseFloat(document.getElementById('right-eye-2').textContent);
+            const outputMessage = document.getElementById('output-message');
+            if (leftEye1 > 15 && rightEye1 > 15 && leftEye2 > 15 && rightEye2 > 15) {
+                outputMessage.innerHTML = '<br>Hurray!! You are not prone to dry eye syndrome. <br><br>But please take care.';
+                outputMessage.className = 'output-message hurray';
+            } 
+            else if((leftEye1 >4 && leftEye1<8) ||(rightEye1 >4 && rightEye1<8)|| (leftEye2 > 4 && leftEye2 < 8)|| (rightEye2 >4 && rightEye2 <8)){
+                outputMessage.innerHTML = '<br>Danger!! You are prone to Dry eye syndrome. <br><br>Contact Your Ophthalmologist.';
+                outputMessage.className = 'output-message danger';
+            }
+            else if (leftEye1 > 5 && rightEye1 > 5 && leftEye2 > 5 && rightEye2 > 5) {
+                outputMessage.innerHTML = '<br>You have a mild dry eye syndrome. <br><br>Limit using digital screens and take care.';
+                outputMessage.className = 'output-message mild';
+            }   
+        }
+        document.addEventListener('DOMContentLoaded', checkPredictions);
+    </script>
+    
+</body>
+</html>
